@@ -65,9 +65,22 @@ var app = app || {};
 				app.TodoFilter === 'completed';
 		},
 
+        // Add "--done" to finished items,
+        // slice off "--done" when unchecked.
+        toggleDone: function () {
+            var title = (this.model.get('title'));
+            if (this.model.get('completed')) {
+                title += ' --done';
+            } else {
+                title = title.slice(0, -7);
+            };
+            this.model.set('title', title);
+        },
+        
 		// Toggle the `"completed"` state of the model.
 		toggleCompleted: function () {
-			this.model.toggle();
+            this.model.toggle();
+            this.toggleDone();
 		},
 
 		// Switch this view into `"editing"` mode, displaying the input field.
